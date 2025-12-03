@@ -164,12 +164,35 @@
             color: #000;
         }
 
-        .master-row {
-            font-size: 0.8rem;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
+        /* Master List Styles */
+        details.master-row {
+            background: #222;
             margin-bottom: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
         }
+
+        summary {
+            padding: 15px;
+            cursor: pointer;
+            list-style: none; /* Hide default triangle */
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            color: var(--gold);
+        }
+        
+        summary::-webkit-details-marker { display: none; }
+
+        .master-detail-content {
+            padding: 15px;
+            background: #151515;
+            border-top: 1px solid #444;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .master-label { color: #888; font-size: 0.8rem; text-transform: uppercase; margin-top: 10px; display: block; border-bottom: 1px solid #333; }
 
         .timer-display {
             font-size: 2rem; color: var(--gold); text-align: center; 
@@ -196,7 +219,6 @@
             padding: 20px; width: 90%; max-width: 400px; text-align: center;
         }
 
-        /* Helper for rich text */
         .flavor-text {
             font-style: italic;
             color: #555;
@@ -379,7 +401,7 @@
         <!-- ADMIN TAB: MASTER LIST -->
         <div class="card">
             <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
-                <span class="card-title">3. MASTER DOSSIER (Cheat Sheet)</span>
+                <span class="card-title">3. MASTER DOSSIER (Full Details)</span>
                 <span>▼</span>
             </div>
             <div class="card-content" id="masterListContainer">
@@ -574,10 +596,28 @@
             
             for (const [pin, char] of Object.entries(CHARACTERS)) {
                 let html = `
-                    <div class="master-row">
-                        <strong class="red-text">${char.name}</strong> (${char.role})<br>
-                        <span style="font-size:0.9em; color:#888;">${char.r1_sec}</span>
-                    </div>
+                    <details class="master-row">
+                        <summary><span class="red-text">${char.name}</span> (${char.role}) - PIN: ${pin}</summary>
+                        <div class="master-detail-content">
+                            <span class="master-label">Briefing (R0):</span>
+                            <div>${char.pre}</div>
+
+                            <span class="master-label">R1 Reveal (They say this):</span>
+                            <div>${char.r1_rev}</div>
+
+                            <span class="master-label">R1 Secret (They hide this):</span>
+                            <div>${char.r1_sec}</div>
+
+                            <span class="master-label">R2 Clue (New Info):</span>
+                            <div>${char.r2_clue}</div>
+
+                            <span class="master-label">R2 Strategy:</span>
+                            <div>${char.r2_strat}</div>
+
+                            <span class="master-label">R3 Final Evidence:</span>
+                            <div>${char.r3_text}</div>
+                        </div>
+                    </details>
                 `;
                 container.innerHTML += html;
             }
