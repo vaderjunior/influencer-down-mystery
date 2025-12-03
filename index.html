@@ -164,34 +164,10 @@
             color: #000;
         }
 
-        /* Master List Styles */
-        details.master-row {
-            background: #222;
-            margin-bottom: 10px;
-            border: 1px solid #444;
-            border-radius: 4px;
-        }
-
-        summary {
-            padding: 15px;
-            cursor: pointer;
-            list-style: none; /* Hide default triangle */
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            color: var(--gold);
-        }
-        
+        details.master-row { background: #222; margin-bottom: 10px; border: 1px solid #444; border-radius: 4px; }
+        summary { padding: 15px; cursor: pointer; list-style: none; font-weight: bold; display: flex; justify-content: space-between; color: var(--gold); }
         summary::-webkit-details-marker { display: none; }
-
-        .master-detail-content {
-            padding: 15px;
-            background: #151515;
-            border-top: 1px solid #444;
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
+        .master-detail-content { padding: 15px; background: #151515; border-top: 1px solid #444; color: #ccc; font-size: 0.9rem; }
         .master-label { color: #888; font-size: 0.8rem; text-transform: uppercase; margin-top: 10px; display: block; border-bottom: 1px solid #333; }
 
         .timer-display {
@@ -200,9 +176,7 @@
             font-family: monospace;
         }
 
-        .host-controls {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-bottom: 20px;
-        }
+        .host-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-bottom: 20px; }
         .host-controls button { width: 100%; font-size: 0.8rem; }
 
         /* --- MODAL --- */
@@ -219,12 +193,23 @@
             padding: 20px; width: 90%; max-width: 400px; text-align: center;
         }
 
-        .flavor-text {
-            font-style: italic;
-            color: #555;
-            font-size: 0.9em;
-            margin-bottom: 10px;
-            display: block;
+        .flavor-text { font-style: italic; color: #555; font-size: 0.9em; margin-bottom: 10px; display: block; }
+        
+        /* TOXICOLOGY REPORT STYLE */
+        .toxic-report-btn {
+            background: #fff; color: #000; font-family: sans-serif; 
+            border: 2px solid #000; margin-bottom: 15px;
+        }
+        .report-paper {
+            background: #fff; color: #000; padding: 15px; text-align: left; 
+            font-family: 'Arial', sans-serif; position: relative;
+        }
+        .report-header { border-bottom: 2px solid #000; margin-bottom: 10px; padding-bottom: 5px;}
+        .report-stamp {
+            position: absolute; bottom: 10px; right: 10px; 
+            border: 3px solid var(--blood-red); color: var(--blood-red);
+            padding: 5px; font-weight: bold; transform: rotate(-15deg);
+            opacity: 0.5;
         }
 
     </style>
@@ -303,8 +288,12 @@
             </div>
             <div class="card-content" id="content3">
                 <h3 class="red-text">ROUND 3: ACCUSATION</h3>
-                <span class="flavor-text">The timeline is clear. The motive is clear. It's time to vote.</span>
+                <span class="flavor-text">The motive is clear. It's time to vote.</span>
                 <hr>
+                
+                <!-- VISUAL CLUE BUTTON -->
+                <button class="toxic-report-btn" onclick="showReport()">📄 VIEW TOXICOLOGY REPORT</button>
+                
                 <p><strong>YOUR FINAL CARD:</strong><br><span id="r3Text">...</span></p>
                 <p style="text-align:center; font-weight:bold; margin-top:20px;">DISCUSS & VOTE NOW</p>
             </div>
@@ -329,7 +318,7 @@
         <div class="card open">
             <div class="card-header"><span class="card-title">1. ROUND PASSWORDS</span></div>
             <div class="card-content">
-                <p>Announce these when you are ready to move the game forward:</p>
+                <p>Announce these to unlock rounds:</p>
                 <ul>
                     <li>Start Round 1: <strong class="red-text">START</strong></li>
                     <li>Start Round 2: <strong class="red-text">SNOW</strong></li>
@@ -341,86 +330,77 @@
         <!-- ADMIN TAB: GUIDE -->
         <div class="card">
             <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
-                <span class="card-title">2. HOSTING SCRIPT (Read This)</span>
+                <span class="card-title">2. HOSTING SCRIPT</span>
                 <span>▼</span>
             </div>
             <div class="card-content">
-                
                 <div class="guide-step">
-                    <strong>STEP 0: The Setup</strong><br>
-                    Wait until everyone has a drink. Ensure everyone is logged in.
-                    <div class="guide-say">
-                        "Welcome to Cucumber City. Bad news, guys. The storm has blocked the Autobahn. Worse news... Rahul is dead in the kitchen. Poisoned Glühwein. The Polizei said 'Wir kommen morgen früh' (We come tomorrow morning). One of us is a killer."
-                    </div>
+                    <strong>STEP 1: Start Round 1</strong><br>
+                    Password: <strong>START</strong><br>
+                    <div class="guide-say">"Introduce yourselves. Where were you when Rahul died?"</div>
                 </div>
 
                 <div class="guide-step">
-                    <strong>STEP 1: Start Round 1 (Alibis)</strong><br>
-                    Tell everyone the password is <strong>START</strong>.<br>
-                    <div class="guide-say">
-                        "Unlock Round 1. Read your secret. I want everyone to introduce themselves and tell us: Why are you in Germany, and where were you 10 minutes ago?"
-                    </div>
+                    <strong>STEP 2: Start Round 2</strong><br>
+                    Password: <strong>SNOW</strong><br>
+                    <div class="guide-say">"Check your phones. You have new dirt on someone. SHARE IT."</div>
                 </div>
 
                 <div class="guide-step">
-                    <strong>STEP 2: Mingle (15-20 Mins)</strong><br>
-                    Set the timer. Let them talk. As <strong>Freddy</strong>, walk around checking if people are using coasters. Be annoying.
+                    <strong>STEP 3: Start Round 3</strong><br>
+                    Password: <strong>TRUTH</strong><br>
+                    <div class="guide-say">"The Toxicology Report is in. Check your Round 3 folder. Look at the evidence."</div>
                 </div>
 
                 <div class="guide-step">
-                    <strong>STEP 3: Start Round 2 (Secrets)</strong><br>
-                    Shout password <strong>SNOW</strong>.<br>
-                    <div class="guide-say">
-                        "Okay, the pleasantries are over. Some of you are lying. Check your Round 2 card. You have new dirt on someone. SHARE IT. Make them explain themselves!"
-                    </div>
+                    <strong>STEP 4: Solution</strong><br>
+                    <div class="guide-say">"Killer: <strong>Priya</strong>. She gave him sleeping pills to hack his phone. It reacted with Lakshmi's Paracetamol."</div>
                 </div>
-
-                <div class="guide-step">
-                    <strong>STEP 4: Start Round 3 (The End)</strong><br>
-                    Shout password <strong>TRUTH</strong>.<br>
-                    Give them 5 mins to read the final clues.
-                    <div class="guide-say">
-                        "This is it. Read your final clue. On the count of 3, point at the killer."
-                    </div>
-                </div>
-
-                <div class="guide-step">
-                    <strong>STEP 5: The Solution</strong><br>
-                    After voting, read this slowly:
-                    <div class="guide-say">
-                        "The killer is <strong>Priya</strong>.<br><br>
-                        Rahul stole her code in college. He became a millionaire; she got a student loan. Tonight, she crushed sleeping pills into his drink just to access his phone and delete the backups.<br><br>
-                        But combined with the painkillers Lakshmi gave him... his heart stopped.<br><br>
-                        Priya, would you like to confess?"
-                    </div>
-                </div>
-
             </div>
         </div>
 
         <!-- ADMIN TAB: MASTER LIST -->
         <div class="card">
             <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
-                <span class="card-title">3. MASTER DOSSIER (Full Details)</span>
+                <span class="card-title">3. MASTER DOSSIER</span>
                 <span>▼</span>
             </div>
-            <div class="card-content" id="masterListContainer">
-                <!-- Javascript will load all player info here -->
-            </div>
+            <div class="card-content" id="masterListContainer"></div>
         </div>
-
     </div>
 
-    <!-- 4. PASSWORD POPUP -->
+    <!-- 4. MODALS -->
+    
+    <!-- Password Modal -->
     <div id="passwordModal" class="modal-overlay hidden">
         <div class="modal-box">
             <h3>Enter Round Password</h3>
-            <p style="color:#888; font-size:0.8rem;">(Host will announce this)</p>
             <input type="text" id="roundPasswordInput" placeholder="PASSWORD">
             <button onclick="checkPassword()">Unlock</button>
             <p id="pwdError" class="red-text hidden">Wrong Password</p>
-            <br>
-            <button onclick="closeModal()" style="background:transparent; border:1px solid #666; font-size:0.8rem;">Cancel</button>
+            <button onclick="closeModal()" style="background:transparent; border:none; margin-top:10px; color:#888;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal-overlay hidden">
+        <div class="modal-box" style="background:white; color:black; max-width:500px;">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h2>LAB TOXICOLOGY</h2>
+                    <p>Date: Dec 3, 2025 | Ref: #8839</p>
+                </div>
+                <h3>SUBJECT: RAHUL 'RICHIE' NAIR</h3>
+                <p><strong>Substances detected in blood sample:</strong></p>
+                <ul>
+                    <li>Alcohol (Ethanol): <span style="color:red">HIGH</span></li>
+                    <li>Paracetamol: <span style="color:orange">DETECTED</span></li>
+                    <li>Benzodiazepines: <span style="color:red; font-weight:bold;">LETHAL CONCENTRATION</span></li>
+                </ul>
+                <p style="font-size:0.8rem; margin-top:20px;">*Note: Interaction between Benzos, Alcohol, and Paracetamol caused cardiac arrest.</p>
+                <div class="report-stamp">CONFIDENTIAL EVIDENCE</div>
+            </div>
+            <button onclick="document.getElementById('reportModal').classList.add('hidden')" style="margin-top:10px;">CLOSE EVIDENCE</button>
         </div>
     </div>
 
@@ -432,126 +412,126 @@
             "12093": {
                 name: "Arjun",
                 role: "The Wannabe Influencer",
-                pre: "You are Rahul's childhood friend, but let's be real: you are here for the content. You have 15k followers (mostly bought) and you need a collab with Rahul to blow up. He refused yesterday. You are vain, obsessed with your hair, and check your reflection constantly.",
+                pre: "You are Rahul's childhood friend, but let's be real, you are here for the content. You have 15k followers, mostly bought. You are vain, obsessed with your hair, and check your reflection constantly.",
                 r1_rev: "I was setting up my ring light in the living room. The lighting in this Villa is tragic. I didn't even go to the kitchen.",
-                r1_sec: "You were actually jealous. Rahul called you a 'clout chaser' yesterday in front of everyone. You hate that he was right.",
+                r1_sec: "You were actually jealous. Rahul called you a 'clout chaser' yesterday. You hate that he was right.",
                 r2_clue: "I saw Varun begging Rahul for money in the hallway. He was literally crying. It was pathetic content.",
-                r2_strat: "If anyone asks why you are filming, say 'This is True Crime content! It's going to go viral!' Check your hair in your phone camera.",
-                r3_text: "ALIBI PROOF: Your Instagram Live timestamp proves you were online and ranting to your followers when the drink was poured. You are innocent (of murder, not of being cringe)."
+                r2_strat: "If anyone asks why you are filming, say 'This is True Crime content! It's going to go viral!'",
+                r3_text: "ALIBI PROOF: Your Instagram Live timestamp proves you were online and ranting to your followers when the drink was poured. You are innocent."
             },
             "88976": {
                 name: "Priya",
                 role: "The Stressed Topper",
-                pre: "You are the batch topper. You are currently doing your PhD and your supervisor is a nightmare. You survive on caffeine and stress. Rahul—who copied your code in 3rd year—is now a millionaire. It burns you inside. You are exhausted and on the edge of a breakdown.",
+                pre: "You are the batch topper doing your PhD. You survive on caffeine. Rahul copied your code in 3rd year and is now a millionaire. It burns you inside. You are exhausted.",
                 r1_rev: "I was in the library reading. I have a thesis defense next week. I don't have time for this drama.",
-                r1_sec: "YOU ARE THE KILLER. You crushed your strong sleeping pills into his drink. You didn't mean to kill him! You just wanted to knock him out so you could unlock his phone and delete the stolen code. ACT NORMAL.",
-                r2_clue: "Deflect attention! Tell everyone: 'I saw Divya crying in the bathroom saying she wished he was dead. She's unstable!'",
-                r2_strat: "If asked about your relationship with Rahul, say you were just 'friendly classmates'. Look nervous, but blame it on PhD stress.",
-                r3_text: "THE SLIP UP: Someone found a burnt piece of paper in the fireplace. It looks like code. CLAIM IT IS YOURS. Say Rahul stole it years ago and you were just trying to get it back."
+                r1_sec: "YOU ARE THE KILLER. You crushed sleeping pills into his drink. You just wanted to knock him out to delete the stolen code from his phone. ACT NORMAL.",
+                r2_clue: "Deflect attention! Tell everyone: 'I saw Divya crying in the bathroom saying she wished he was dead!'",
+                r2_strat: "If asked about your relationship with Rahul, say you were just 'friendly classmates'. Blame your nerves on PhD stress.",
+                r3_text: "THE SLIP UP: Someone found a burnt piece of paper. It looks like code. CLAIM IT IS YOURS. Say Rahul stole it years ago."
             },
             "45221": {
                 name: "Deepak",
                 role: "The Gym Bro",
-                pre: "You believe the German diet is 90% carbs and it's killing your gains. You brought your own protein powder. You think Rahul is physically weak and 'soft'. You spend most of your time converting Euros to Rupees and complaining about how expensive chicken is here.",
-                r1_rev: "I was doing pushups on the balcony. The cold air increases testosterone. Rahul wouldn't understand, he has never lifted a weight in his life.",
-                r1_sec: "You stole Rahul's Rolex AFTER he collapsed. It's currently hidden in your jar of Creatine. You need the money for a flight home.",
-                r2_clue: "I saw Sneha spitting in Rahul's food earlier. She called him a 'Capitalist Pig'. That sounds like motive to me, bro.",
-                r2_strat: "Flex your muscles when you talk. Suspect anyone who looks weak. Call people 'Bro' aggressively.",
-                r3_text: "ALIBI: You are a thief, not a killer. If they find the watch, admit you took it because 'he doesn't need time where he's going', but swear you didn't poison him."
+                pre: "You believe the German diet is 90% carbs. You brought your own protein powder. You think Rahul is physically weak. You spend most of your time converting Euros to Rupees.",
+                r1_rev: "I was doing pushups on the balcony. The cold air increases testosterone.",
+                r1_sec: "You stole Rahul's Rolex AFTER he collapsed. It's hidden in your jar of Creatine.",
+                r2_clue: "I saw Sahil spitting in Rahul's food earlier. He called him a 'Capitalist Pig'. That sounds like motive to me, bro.",
+                r2_strat: "Flex your muscles when you talk. Suspect anyone who looks weak.",
+                r3_text: "ALIBI: You are a thief, not a killer. Admit to the watch if pressed, but deny the murder."
             },
             "99823": {
                 name: "Anjali",
                 role: "The Gossip Queen",
-                pre: "You know everyone's secrets. You are the admin of the batch WhatsApp group. You pretend to be sweet, but you live for the drama. You think Rahul was hot, but arrogant. You are currently sipping tea (literally and figuratively).",
-                r1_rev: "I was in the kitchen, but I was facing the window! I was... taking a selfie. I didn't see who touched his cup.",
-                r1_sec: "You actually saw Priya hovering near the drinks table looking sweaty and nervous. But don't reveal it all yet... let the tension build.",
+                pre: "You know everyone's secrets. You are the admin of the batch WhatsApp group. You pretend to be sweet, but you live for the drama. You are currently sipping tea.",
+                r1_rev: "I was in the kitchen, but I was facing the window! I was... taking a selfie.",
+                r1_sec: "You saw Priya hovering near the drinks table looking sweaty and nervous. Let the tension build before revealing it.",
                 r2_clue: "I heard Rahul on the phone yelling at Varun. Something about 'Bitcoin' and 'Lost it all'. Varun is broke, guys.",
-                r2_strat: "Stir the pot! If the conversation dies down, say 'Wait, didn't I hear [Name] say [Something suspicious]?'",
-                r3_text: "CRITICAL MEMORY: 'Wait... I remember Rahul complaining his drink tasted chalky. Like medicine. Not like poison... but like pills.' Look at Lakshmi (the pharmacy lady)!"
+                r2_strat: "Stir the pot! Say 'Wait, didn't I hear someone say something suspicious?'",
+                r3_text: "CRITICAL MEMORY: 'Wait... I remember Rahul complaining his drink tasted chalky. Like medicine. Not like poison... but like pills.' Look at Lakshmi!"
             },
             "77612": {
                 name: "Freddy (YOU)",
                 role: "The 'German' Expert",
-                pre: "You have lived here for 4 years and you act like you were born in Berlin. You correct everyone's pronunciation of 'Glühwein'. You are annoyed because Rahul refused to pay the Pfand (deposit) for the bottles. You like rules and order.",
-                r1_rev: "I was checking the thermostat. Everyone keeps touching it! It must be exactly 21 degrees for optimal efficiency.",
-                r1_sec: "You are actually furious that Rahul didn't pay his share of the Airbnb. You are stuck with the bill. You hated him for being cheap.",
-                r2_clue: "I found a receipt in the trash for 'Strong Sleeping Pills'. It belongs to Priya. Why does she need such strong medication?",
-                r2_strat: "Act superior. Correct people's grammar. Complain about the mess. 'This is why we can't have nice things.'",
-                r3_text: "ALIBI: You were on the phone with the pizza delivery guy arguing about the delivery fee (in German) when the body dropped. Your call log proves it."
+                pre: "You correct everyone's pronunciation of 'Glühwein'. You are annoyed because Rahul refused to pay the Pfand. You like rules.",
+                r1_rev: "I was checking the thermostat. Everyone keeps touching it! It must be exactly 21 degrees.",
+                r1_sec: "You are actually furious that Rahul didn't pay his share of the Airbnb. You are stuck with the bill.",
+                r2_clue: "I found a receipt in the trash for 'Strong Sleeping Pills'. It belongs to Priya.",
+                r2_strat: "Act superior. Correct people's grammar. Complain about the mess.",
+                r3_text: "ALIBI: You were on the phone with the pizza delivery guy arguing about the delivery fee."
             },
             "33409": {
                 name: "Lakshmi",
                 role: "The Mother Hen",
-                pre: "You carried 5kg of pickles in your luggage. You treat everyone like a child. You have a full pharmacy in your handbag (Dolo, Vicks, Digene). You are Rahul's distant cousin and you are disappointed in his lifestyle.",
-                r1_rev: "I was unpacking the pickles. Rahul looked pale earlier, I told him to eat properly. None of you eat enough vegetables.",
-                r1_sec: "You gave Rahul a headache pill (Paracetamol) about 20 minutes before he died. Now you are terrified it reacted with the alcohol!",
-                r2_clue: "Defend yourself! 'I gave him a paracetamol! Not poison! Check the strip in my bag! I am trying to keep you all alive!'",
-                r2_strat: "Force feed people snacks while interrogating them. 'Eat this murukku, you look stressed.'",
+                pre: "You carried 5kg of pickles in your luggage. You have a full pharmacy in your handbag. You are Rahul's distant cousin.",
+                r1_rev: "I was unpacking the pickles. Rahul looked pale earlier, I told him to eat properly.",
+                r1_sec: "You gave Rahul a Paracetamol about 20 minutes before he died. Now you are terrified it reacted with the alcohol!",
+                r2_clue: "Defend yourself! 'I gave him a paracetamol! Not poison! Check the strip in my bag!'",
+                r2_strat: "Force feed people snacks while interrogating them.",
                 r3_text: "OBSERVATION: 'I noticed Priya asked me earlier if I had anything really strong for insomnia. I said no... so where did she get pills?'"
             },
             "77102": {
                 name: "Varun",
                 role: "The Crypto Guy",
-                pre: "You act rich. You rented a BMW for this trip to show off. In reality, you lost all your money on a meme coin last week. You owe Rahul €5,000 and he was demanding it back by tonight.",
-                r1_rev: "I was checking the markets. Crypto never sleeps, bro. To the moon! HODL!",
-                r1_sec: "Rahul threatened to expose you as a fraud if you didn't pay him tonight. You are desperate. You are sweating.",
-                r2_clue: "Deflect blame to Sneha! 'She hates rich people! She probably killed him to smash the patriarchy or something!'",
-                r2_strat: "Look nervous. Check your phone constantly. If anyone asks about money, say 'Assets are liquid, bro, just waiting for the transfer.'",
-                r3_text: "ALIBI: Your phone shows you were on a Zoom call with your angry parents begging for money at the exact moment of death. You are pathetic, but innocent."
+                pre: "You act rich. You rented a BMW for this trip. In reality, you lost all your money on a meme coin. You owe Rahul €5,000.",
+                r1_rev: "I was checking the markets. Crypto never sleeps, bro. To the moon!",
+                r1_sec: "Rahul threatened to expose you as a fraud if you didn't pay him tonight. You are desperate.",
+                r2_clue: "Deflect blame to Sahil! 'He hates rich people! He probably killed him to smash the patriarchy!'",
+                r2_strat: "Look nervous. Check your phone constantly.",
+                r3_text: "ALIBI: Your phone shows you were on a Zoom call with your angry parents begging for money at the exact moment of death."
             },
             "22918": {
                 name: "Meera",
                 role: "The Quiet Artist",
-                pre: "You are the 'weird' one. You wear oversized clothes and sketch people without asking. You find death 'fascinating'. You barely speak, which makes you a prime suspect.",
-                r1_rev: "I was sketching the fire... the flames were dancing. Like Rahul's soul.",
-                r1_sec: "You saw Deepak steal the watch from the body, but you haven't said anything because you want to see if he confesses. It's a social experiment.",
-                r2_clue: "I saw Priya throw something into the fire right after Rahul fell. It looked like a wrapper. Why burn a wrapper?",
+                pre: "You are the 'weird' one. You wear oversized clothes and sketch people. You find death 'fascinating'.",
+                r1_rev: "I was sketching the fire... the flames were dancing.",
+                r1_sec: "You saw Deepak steal the watch from the body, but you haven't said anything. It's a social experiment.",
+                r2_clue: "I saw Priya throw something into the fire right after Rahul fell. It looked like a wrapper.",
                 r2_strat: "Stare at people intensely. If they ask why, say 'I am capturing your aura of guilt.'",
-                r3_text: "THE REVEAL: Show your sketchbook (mime it). 'I drew the room 30 minutes ago. Look... Priya is standing right next to Rahul's cup while he was turned away.'"
+                r3_text: "THE REVEAL: Show your sketchbook (mime it). 'I drew the room 30 minutes ago. Priya is standing right next to Rahul's cup.'"
             },
             "55067": {
                 name: "Jose",
                 role: "The Party Animal",
-                pre: "You brought 3 bottles of Old Monk from the Duty Free. You are slightly drunk. You love everyone, but you are clumsy. You think every problem can be solved with a drink.",
-                r1_rev: "I poured the drinks! Cheers! But I poured from the same bottle for everyone! I didn't poison it, I promise!",
-                r1_sec: "You were too drunk to notice if someone slipped something into the cup after you poured it. You might have left the cups unattended...",
-                r2_clue: "Rahul was complaining of a headache. I saw Lakshmi give him a pill... but I also saw Priya hand him a glass of water. Who knows what was in the water?",
-                r2_strat: "Offer everyone a drink, even the police. Slur your words slightly. Be the lovable drunk.",
+                pre: "You brought 3 bottles of Old Monk. You are slightly drunk. You think every problem can be solved with a drink.",
+                r1_rev: "I poured the drinks! Cheers! But I poured from the same bottle for everyone! I didn't poison it!",
+                r1_sec: "You were too drunk to notice if someone slipped something into the cup after you poured it.",
+                r2_clue: "Rahul was complaining of a headache. I saw Lakshmi give him a pill... but I also saw Priya hand him a glass of water.",
+                r2_strat: "Offer everyone a drink, even the police. Slur your words slightly.",
                 r3_text: "DEFENSE: 'If I wanted to kill him, I would have challenged him to a drinking contest. I wouldn't waste good wine!'"
             },
             "66123": {
-                name: "Sneha",
+                name: "Sahil",
                 role: "The Activist",
-                pre: "You are studying Sociology. You hate capitalism, billionaires, and Rahul's 'startup bro' energy. You think his wealth is stolen from the working class. You are always judging people's carbon footprint.",
-                r1_rev: "I was in the bathroom. Rahul represents everything wrong with the system. But I believe in justice, not murder.",
-                r1_sec: "You wrote 'THIEF' in lipstick on Rahul's mirror earlier to scare him. You wanted him to feel unsafe.",
-                r2_clue: "Reveal that Manu was trying to hack Rahul's phone earlier! 'I saw Manu on his laptop trying to break into Rahul's cloud!'",
-                r2_strat: "Lecture people. 'This murder is a symptom of a sick society.' Use words like 'Bourgeoisie' and 'Oppression'.",
-                r3_text: "DEFENSE: 'I wanted to destroy his reputation, not his body. Violence is the tool of the oppressor. I am non-violent.'"
+                pre: "You study Sociology. You hate capitalism and Rahul's 'startup bro' energy. You think his wealth is stolen from the working class.",
+                r1_rev: "I was in the bathroom. Rahul represents everything wrong with the system.",
+                r1_sec: "You wrote 'THIEF' in lipstick on Rahul's mirror earlier to scare him.",
+                r2_clue: "Reveal that Manu was trying to hack Rahul's phone! 'I saw Manu on his laptop trying to break into Rahul's cloud!'",
+                r2_strat: "Lecture people. Use words like 'Bourgeoisie' and 'Oppression'.",
+                r3_text: "DEFENSE: 'I wanted to destroy his reputation, not his body. Violence is the tool of the oppressor.'"
             },
             "10101": {
                 name: "Manu",
                 role: "The Techie",
-                pre: "You are the IT guy. You fixed the Airbnb Wi-Fi because it was trash. You are socially awkward and prefer computers to humans. You worked for Rahul briefly and he fired you for 'being too slow'.",
-                r1_rev: "The wifi here is terrible. 5Mbps? Disgusting. I was rebooting the router in the hallway.",
-                r1_sec: "You know Rahul's app code was actually stolen. You found proof on the cloud. You were hacking him to get evidence.",
-                r2_clue: "I checked the router logs. Everyone was online... except Priya. She was offline for 20 minutes right before the murder. What was she doing?",
-                r2_strat: "Complain about the tech. 'Who set up this Alexa? It's a security nightmare.' Look at your phone more than people.",
-                r3_text: "BIG REVEAL: 'I hacked Rahul's email. He sent an email to Priya yesterday titled 'Legal Threat'. He knew she was going to expose him.'"
+                pre: "You are the IT guy. You fixed the Airbnb Wi-Fi. You are socially awkward and prefer computers to humans.",
+                r1_rev: "The wifi here is terrible. 5Mbps? Disgusting. I was rebooting the router.",
+                r1_sec: "You know Rahul's app code was actually stolen. You were hacking him to get evidence.",
+                r2_clue: "I checked the router logs. Everyone was online... except Priya. She was offline for 20 minutes right before the murder.",
+                r2_strat: "Complain about the tech. 'Who set up this Alexa? It's a security nightmare.'",
+                r3_text: "BIG REVEAL: 'I hacked Rahul's email. He sent an email to Priya yesterday titled 'Legal Threat'."
             },
             "40404": {
                 name: "Divya",
                 role: "The Ex-Girlfriend",
-                pre: "You dated Rahul for 2 years. He dumped you via WhatsApp. You are emotional, dramatic, and your mascara is running. You oscillate between 'I miss him' and 'I hate him'.",
+                pre: "You dated Rahul for 2 years. He dumped you via WhatsApp. You are emotional, dramatic, and your mascara is running.",
                 r1_rev: "I was crying on the stairs! *Sob* He was a jerk, but I loved him! *Sob*",
                 r1_sec: "You still have a key to his apartment in Kochi. You were planning to break in and steal his cat.",
                 r2_clue: "Suspicion: Admit you sent him a text saying 'You will pay for this'. It looks bad, but you meant emotionally!",
-                r2_strat: "Make everything about your relationship. 'He never liked my cooking!' Cry loudly if accused.",
-                r3_text: "ALIBI: Lakshmi was comforting you on the stairs when the body fell. She can vouch for you. You were too busy crying to kill anyone."
+                r2_strat: "Make everything about your relationship. Cry loudly if accused.",
+                r3_text: "ALIBI: Lakshmi was comforting you on the stairs when the body fell. She can vouch for you."
             }
         };
 
-        // --- STATE & UTILS ---
+        // --- GAME LOGIC ---
         let currentUser = null;
         let pendingRound = 0;
         let timerInterval;
@@ -599,23 +579,11 @@
                     <details class="master-row">
                         <summary><span class="red-text">${char.name}</span> (${char.role}) - PIN: ${pin}</summary>
                         <div class="master-detail-content">
-                            <span class="master-label">Briefing (R0):</span>
-                            <div>${char.pre}</div>
-
-                            <span class="master-label">R1 Reveal (They say this):</span>
-                            <div>${char.r1_rev}</div>
-
-                            <span class="master-label">R1 Secret (They hide this):</span>
-                            <div>${char.r1_sec}</div>
-
-                            <span class="master-label">R2 Clue (New Info):</span>
-                            <div>${char.r2_clue}</div>
-
-                            <span class="master-label">R2 Strategy:</span>
-                            <div>${char.r2_strat}</div>
-
-                            <span class="master-label">R3 Final Evidence:</span>
-                            <div>${char.r3_text}</div>
+                            <span class="master-label">Briefing (R0):</span><div>${char.pre}</div>
+                            <span class="master-label">R1 Reveal:</span><div>${char.r1_rev}</div>
+                            <span class="master-label">R1 Secret:</span><div>${char.r1_sec}</div>
+                            <span class="master-label">R2 Clue:</span><div>${char.r2_clue}</div>
+                            <span class="master-label">R3 Final:</span><div>${char.r3_text}</div>
                         </div>
                     </details>
                 `;
@@ -623,12 +591,13 @@
             }
         }
 
+        function showReport() {
+            document.getElementById('reportModal').classList.remove('hidden');
+        }
+
         function tryUnlock(roundNum) {
             const card = getEl('card' + roundNum);
-            if (card.classList.contains('open')) {
-                card.classList.remove('open');
-                return;
-            }
+            if (card.classList.contains('open')) { card.classList.remove('open'); return; }
             pendingRound = roundNum;
             getEl('passwordModal').classList.remove('hidden');
             getEl('roundPasswordInput').value = "";
@@ -641,18 +610,14 @@
             if (input === ROUND_PASSWORDS[pendingRound]) {
                 getEl('card' + pendingRound).classList.remove('locked');
                 getEl('card' + pendingRound).classList.add('open');
-                getEl('lock' + pendingRound).innerText = '🔓';
-                closeModal();
+                getEl('passwordModal').classList.add('hidden');
             } else {
                 getEl('pwdError').classList.remove('hidden');
             }
         }
 
-        function closeModal() {
-            getEl('passwordModal').classList.add('hidden');
-        }
-
-        // --- TIMER ---
+        function closeModal() { getEl('passwordModal').classList.add('hidden'); }
+        
         function startTimer(minutes) {
             stopTimer();
             let seconds = minutes * 60;
@@ -660,22 +625,17 @@
             timerInterval = setInterval(() => {
                 seconds--;
                 updateTimerDisplay(seconds);
-                if (seconds <= 0) {
-                    stopTimer();
-                    alert("Time is up!");
-                }
+                if (seconds <= 0) { stopTimer(); alert("Time is up!"); }
             }, 1000);
         }
 
         function stopTimer() { clearInterval(timerInterval); }
-
         function updateTimerDisplay(seconds) {
             const m = Math.floor(seconds / 60).toString().padStart(2, '0');
             const s = (seconds % 60).toString().padStart(2, '0');
             getEl('timer').innerText = `${m}:${s}`;
         }
 
-        // Enter key listeners
         getEl('pinInput').addEventListener("keypress", (e) => { if (e.key === "Enter") handleLogin(); });
         getEl('roundPasswordInput').addEventListener("keypress", (e) => { if (e.key === "Enter") checkPassword(); });
 
